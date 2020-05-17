@@ -1,0 +1,12 @@
+query getItems {
+    items {
+        title
+        description
+        image
+        largeImage
+        price
+        category {
+            name
+        }
+    }
+}
