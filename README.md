@@ -39,7 +39,6 @@ Mansion:
 Burger:
 
 ```
-<a href="https://www.freepik.com/free-photos-vectors/house">House vector created by macrovector - www.freepik.com</a>
 <a href='https://www.freepik.com/free-photos-vectors/food'>Food vector created by gstudioimagen - www.freepik.com</a>
 ```
 
