@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import BaseArtwork from '@/components/global/BaseArtwork.vue'
-import BaseButton from '@/components/global/BaseButton.vue'
+import Vue from 'vue';
+import BaseArtwork from '@/components/global/BaseArtwork.vue';
+import BaseButton from '@/components/global/BaseButton.vue';
 
-const globalComponents = [BaseArtwork, BaseButton]
+const globalComponents = [BaseArtwork, BaseButton];
 
 const registerGlobalComponents = () => {
-    globalComponents.forEach((component: any) =>
+    globalComponents.forEach(component =>
         Vue.component(component.name, component)
-    )
-}
+    );
+};
 
-export default registerGlobalComponents
+export default registerGlobalComponents;

@@ -1,13 +1,19 @@
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api';
 
 export default defineComponent({
     name: 'BaseButton',
-})
+    props: {
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
+});
 </script>
 
 <template>
-    <button class="BaseButton">
+    <button class="BaseButton" :disabled="disabled">
         <slot></slot>
     </button>
 </template>
@@ -41,6 +47,13 @@ export default defineComponent({
 
     &:focus-visible {
         outline: solid;
+    }
+
+    &:disabled {
+        border: 2px solid $gray;
+        background: $lightGray;
+        color: $gray;
+        cursor: not-allowed;
     }
 }
 </style>

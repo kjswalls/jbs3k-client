@@ -1,9 +1,9 @@
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api';
 
 export default defineComponent({
     name: 'TheHeader',
-})
+});
 </script>
 
 <template>
@@ -17,5 +17,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .TheHeader {
     margin-bottom: 20px;
+    pointer-events: none;
+}
+
+@media (max-width: $sm) {
+    .TheHeader {
+        text-align: center;
+    }
 }
 </style>

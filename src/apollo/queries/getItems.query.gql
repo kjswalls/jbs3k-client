@@ -1,12 +1,15 @@
 query getItems {
     items {
+        id
         title
         description
         image
         largeImage
         price
+        source
         category {
             name
+            id
         }
     }
 }

@@ -1,35 +1,28 @@
-<script>
-import { defineComponent } from '@vue/composition-api'
-import ItemListItem from '@/components/ItemListItem.vue'
-import { useQuery, useResult } from '@vue/apollo-composable'
-import getItems from '@/apollo/queries/getItems.query.gql'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api';
+import ItemListItem from '@/components/ItemListItem.vue';
+import { Item } from '@/types/item';
 
 export default defineComponent({
     name: 'ItemList',
     components: {
         ItemListItem,
     },
-    setup() {
-        const { result, loading, error } = useQuery(getItems)
-        const items = useResult(result, null, data => data.items)
-        return {
-            items,
-        }
+    props: {
+        items: {
+            type: Array as () => Item[],
+        },
     },
-})
+});
 </script>
 
 <template>
-    <ul class="ItemList" v-if="items">
-        <ItemListItem
-            v-for="item of items"
-            :key="item.id"
-            :image="item.image"
-            :name="item.title"
-            :price="item.price"
-            :description="item.description"
-        />
+    <ul class="ItemList" v-if="items.length">
+        <ItemListItem v-for="item of items" :key="item.id" :item="item" />
     </ul>
+    <p v-else class="secondaryBody emptyView">
+        This category doesn't have any items in it yet. :)
+    </p>
 </template>
 
 <style lang="scss" scoped>
@@ -45,5 +38,17 @@ export default defineComponent({
     justify-items: center;
     overflow-y: auto;
     width: 100%;
+}
+
+.emptyView {
+    color: $darkGray;
+    justify-self: start;
+    padding: 8px 10px;
+}
+
+@media (max-width: $sm) {
+    .ItemList {
+        grid-row: 3 / -1;
+    }
 }
 </style>

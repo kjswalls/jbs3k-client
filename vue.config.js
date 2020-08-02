@@ -15,6 +15,11 @@ module.exports = {
             .test(/\.(graphql|gql)$/)
             .use('graphql-tag/loader')
             .loader('graphql-tag/loader')
-            .end()
+            .end();
+
+        config.optimization.splitChunks({
+            minSize: 10000,
+            maxSize: 250000,
+        });
     },
-}
+};

@@ -1,13 +1,13 @@
 <script>
-import { defineComponent } from '@vue/composition-api'
-import TheLayout from '@/components/TheLayout.vue'
+import { defineComponent } from '@vue/composition-api';
+import TheLayout from '@/components/TheLayout.vue';
 
 export default defineComponent({
     name: 'App',
     components: {
         TheLayout,
     },
-})
+});
 </script>
 
 <template>

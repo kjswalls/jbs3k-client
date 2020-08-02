@@ -1,6 +1,9 @@
-<script>
-import { defineComponent, computed } from '@vue/composition-api'
-import AddToCartButton from '@/components/AddToCartButton.vue'
+<script lang="ts">
+import { defineComponent, computed } from '@vue/composition-api';
+import AddToCartButton from '@/components/AddToCartButton.vue';
+import { Item } from '@/types/item';
+import { useCart } from '@/functions/cart';
+import { useCurrency } from '@/functions/util';
 
 export default defineComponent({
     name: 'ItemListItem',
@@ -8,45 +11,41 @@ export default defineComponent({
         AddToCartButton,
     },
     props: {
-        name: {
-            type: String,
+        item: {
+            type: Object as () => Item,
             required: true,
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        description: {
-            type: String,
-            default: '',
-        },
-        image: {
-            type: String,
-            default: '',
         },
     },
     setup(props) {
-        const formattedPrice = computed(() =>
-            new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-            }).format(props.price)
-        )
+        const { addToCart, canAffordItem } = useCart();
+        const { formatNumber } = useCurrency();
+        const formattedPrice = computed(() => formatNumber(props.item.price));
+        const isAddDisabled = computed(() => !canAffordItem(props.item));
+
         return {
             formattedPrice,
-        }
+            addToCart,
+            isAddDisabled,
+        };
     },
-})
+});
 </script>
 
 <template>
     <li class="ItemListItem">
-        <BaseArtwork :imageSrc="image" :altText="`${name} icon`" class="icon" />
-        <p class="primaryBody name">{{ name }}</p>
+        <BaseArtwork
+            class="icon"
+            :imageSrc="item.image"
+            :altText="`${item.title} icon`"
+            :popoverContent="item.description"
+            :popoverSource="item.source"
+        />
+        <p class="primaryBody name">{{ item.title }}</p>
         <p class="primaryBody price">{{ formattedPrice }}</p>
-        <AddToCartButton />
+        <AddToCartButton
+            @click.native="addToCart(item)"
+            :disabled="isAddDisabled"
+        />
     </li>
 </template>
 
@@ -62,6 +61,7 @@ export default defineComponent({
     align-items: center;
     padding: 10px;
     transition: transform 0.3s ease;
+    text-align: center;
 
     .icon {
         margin-bottom: 5px;
